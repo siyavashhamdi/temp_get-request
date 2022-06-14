@@ -17,7 +17,9 @@ const bootstrap = async () => {
     res.end();
   });
 
-  app.listen(80, () => console.log("Server is running on localhos:80!"));
+  const port = process.env.PORT;
+
+  app.listen(port, () => console.log(`Server is running on localhos:${port}!`));
 };
 
 bootstrap();

@@ -5,21 +5,58 @@ const bootstrap = async () => {
 
   const app = express();
 
-  app.get("*", function (req, res) {
-    console.log({ msg: "get_all", url: req.url, req, res });
+  const safeLog = (method: string, req: any, resp: any) => {
+    const rndVal = Math.random();
 
-    res.end();
+    try {
+      console.log({ SL: 17.01, rndVal, method, req });
+    } catch (err) {
+      console.log({ SL: -99.01, rndVal, method, err });
+    }
+
+    try {
+      console.log({ SL: 17.02, rndVal, method, resp });
+    } catch (err) {
+      console.log({ SL: -99.02, rndVal, method, err });
+    }
+
+    try {
+      console.log({ SL: 17.03, rndVal, method, jsonReq: JSON.stringify(req) });
+    } catch (err) {
+      console.log({ SL: -99.03, rndVal, method, err });
+    }
+
+    try {
+      console.log({
+        SL: 17.04,
+        rndVal,
+        method,
+        jsonResp: JSON.stringify(resp),
+      });
+    } catch (err) {
+      console.log({ SL: -99.04, rndVal, method, err });
+    }
+
+    console.log("\n\n\n------------------------------------------\n\n\n");
+  };
+
+  app.get("*", function (req, resp) {
+    safeLog("GET", req, resp);
+
+    resp.end();
   });
 
-  app.post("*", function (req, res) {
-    console.log({ msg: "post_all", url: req.url, req, res });
+  app.post("*", function (req, resp) {
+    safeLog("POST", req, resp);
 
-    res.end();
+    resp.end();
   });
 
   const port = process.env.PORT;
 
-  app.listen(port, () => console.log(`Server is running on localhos:${port}!`));
+  app.listen(port, () =>
+    console.log(`Server is running on localhost:${port}!`)
+  );
 };
 
 bootstrap();
